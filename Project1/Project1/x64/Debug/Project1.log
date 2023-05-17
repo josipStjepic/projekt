@@ -1,0 +1,2 @@
+﻿  funkcije.c
+C:\Users\Korisnik\Documents\Visual Studio Code\Project1\Project1\funkcije.c(132): error C4700: uninitialized local variable 'brojRezultata' used
