@@ -4,54 +4,57 @@
 #include "header.h"
 
 int main() {
-    Igrac klub[MAX_IGRACA];
-    Utakmica utakmice[MAX_UTAKMICA];
-    int brojIgraca = 0;
-    int brojUtakmica = 0;
-    int izbor;
+	Igrac* klub = NULL;
+	int brojIgraca = 0;
 
-    do {
-        printf("------- IZBORNIK -------\n");
-        printf("1. Unos igraca\n");
-        printf("2. Unos rezultata utakmice\n");
-        printf("3. Ispis igraca\n");
-        printf("4. Ispis utakmica\n");
-        printf("5. Pretrazi rezultat\n");
-        printf("0. Izlaz iz programa\n");
-        printf("-------------------------\n");
-        printf("Unesite svoj izbor: ");
-        scanf("%d", &izbor);
+	Utakmica* utakmice = NULL;
+	int brojUtakmica = 0;
 
-        switch (izbor) {
-        case 1:
-            unosIgraca(klub, &brojIgraca);
-            break;
-        case 2:
-            unosUtakmice(utakmice, &brojUtakmica);
-            break;
-        case 3:
-            ispisIgraca(klub, brojIgraca);
-            break;
-        case 4:
-            ispisUtakmica(utakmice, brojUtakmica);
-             break;  
-         case 5:
-            pretraziRezultate(utakmice, brojUtakmica);
-            break;
-       
-           
-        case 0:
-            printf("Izlazi iz programa!\n");
-            break;
-        default:
-            printf("Nepoznat izbor. Molim pokusajte ponovno.\n");
-            break;
-        }
+	int izbor;
+	do {
+		printf("----- Izbornik -----\n");
+		printf("1. Unos igraca\n");
+		printf("2. Ispis igraca\n");
+		printf("3. Unos utakmice\n");
+		printf("4. Ispis utakmica\n");
+		printf("5. Pretrazi rezultate utakmica\n");
+		printf("6. Izlaz\n");
+		printf("Odabir: ");
+		scanf("%d", &izbor);
 
-        printf("\n");
-    } while (izbor != 0);
+		switch (izbor) {
+		case 1:
+			unosIgraca(&klub, &brojIgraca);
+			spremanjeIgracaUDatoteku(klub, brojIgraca);
+			break;
+		case 2:
+			ispisIgraca(klub, brojIgraca);
+			break;
+		case 3:
+			unosUtakmice(&utakmice, &brojUtakmica);
+			spremanjeUtakmicaUDatoteku(utakmice, brojUtakmica);
+			break;
+		case 4:
+			ispisUtakmica(utakmice, brojUtakmica);
+			break;
+		case 5:
+			pretraziRezultate(utakmice, brojUtakmica);
+			break;
+		case 6:
+			printf("Izlazi iz programa.\n");
+			break;
+		
+		default:
+			printf("Krivi odabir. Molim pokusajte ponovno.\n");
+		}
 
-    return 0;
+		printf("\n");
+	} while (izbor != 8);
+
+	free(klub);
+	free(utakmice);
+
+	return 0;
 }
 
 
