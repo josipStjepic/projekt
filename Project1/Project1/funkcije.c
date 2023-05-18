@@ -4,165 +4,122 @@
 #include <string.h>
 #include "header.h"
 
-// Funkcija za unos novog igraca
-void unosIgraca(Igrac klub[], int* brojIgraca) {
-    if (*brojIgraca >= MAX_IGRACA) {
-        printf("Klub je veæ popunjen!\n");
-        return;
-    }
+void unosIgraca(Igrac** klub, int* brojIgraca) {
+	(*brojIgraca)++;
+	*klub = realloc(*klub, (*brojIgraca) * sizeof(Igrac));
 
-    Igrac noviIgrac;
+	printf("Unesite ime igraca: ");
+	scanf("%s", (*klub)[*brojIgraca - 1].ime);
 
-    printf("Unesite ime igraca: ");
-    scanf("%s", noviIgrac.ime);
-
-    printf("Unesite prezime igraca: ");
-    scanf("%s", noviIgrac.prezime);
-
-    printf("Unesite broj golova: ");
-    scanf("%d", &noviIgrac.brojGolova);
-
-    klub[*brojIgraca] = noviIgrac;
-    (*brojIgraca)++;
-
-    printf("Igrac je uspjesno dodan.\n");
-    spremanjeIgracaUDatoteku(klub, *brojIgraca);
+	printf("Unesite broj golova igraca: ");
+	scanf("%d", &(*klub)[*brojIgraca - 1].brojGolova);
 }
 
-// Funkcija za unos rezultata utakmice
-void unosUtakmice(Utakmica utakmice[], int* brojUtakmica) {
-    if (*brojUtakmica >= MAX_UTAKMICA) {
-        printf("Dostignut maksimalan broj utakmica!\n");
-        return;
-    }
+void ispisIgraca(Igrac* klub, int brojIgraca) {
+	if (brojIgraca == 0) {
+		printf("Nema upisanih igraca.\n");
+		return;
+	}
 
-    Utakmica novaUtakmica;
+	printf("----- Popis igraca -----\n");
 
-    printf("Unesite ime protivnika: ");
-    scanf("%s", novaUtakmica.protivnik);
-
-    printf("Unesite broj golova za nasu ekipu: ");
-    scanf("%d", &novaUtakmica.goloviNasaEkipa);
-
-    printf("Unesite broj golova za protivnicku ekipu: ");
-    scanf("%d", &novaUtakmica.goloviProtivnik);
-
-
-
-    utakmice[*brojUtakmica] = novaUtakmica;
-    (*brojUtakmica)++;
-
-    printf("Utakmica je uspjesno dodana.\n");
-    spremanjeUtakmicaUDatoteku(utakmice, *brojUtakmica);
+	for (int i = 0; i < brojIgraca; i++) {
+		printf("Igrac %d:\n", i + 1);
+		printf("Ime: %s\n", klub[i].ime);
+		printf("Broj golova: %d\n", klub[i].brojGolova);
+		printf("-----------------------\n");
+	}
 }
 
-// Funkcija za ispis svih igraca
-void ispisIgraca(Igrac klub[], int brojIgraca) {
-    printf("----- Popis igraca -----\n");
+void unosUtakmice(Utakmica** utakmice, int* brojUtakmica) {
+	(*brojUtakmica)++;
+	*utakmice = realloc(*utakmice, (*brojUtakmica) * sizeof(Utakmica));
 
-    if (brojIgraca == 0) {
-        printf("Klub nema igraca.\n");
-        return;
-    }
+	printf("Unesite ime protivnika: ");
+	scanf("%s", (*utakmice)[*brojUtakmica - 1].protivnik);
 
-    for (int i = 0; i < brojIgraca; i++) {
-        printf("Igrac %d:\n", i + 1);
-        printf("Ime: %s\n", klub[i].ime);
-        printf("Ime: %s\n", klub[i].prezime);
-        printf("Broj golova: %d\n", klub[i].brojGolova);
-        printf("-----------------------\n");
-    }
+	printf("Unesite broj golova naseg kluba: ");
+	scanf("%d", &(*utakmice)[*brojUtakmica - 1].goloviNasaEkipa);
+
+	printf("Unesite broj golova protivnicke ekipe: ");
+	scanf("%d", &(*utakmice)[*brojUtakmica - 1].goloviProtivnik);
 }
 
-// Funkcija za ispis svih utakmica
-void ispisUtakmica(Utakmica utakmice[], int brojUtakmica) {
-    printf("----- Popis utakmica -----\n");
+void ispisUtakmica(Utakmica* utakmice, int brojUtakmica) {
+	if (brojUtakmica == 0) {
+		printf("Nema upisanih utakmica.\n");
+		return;
+	}
 
-    if (brojUtakmica == 0) {
-        printf("Klub nema odigranih utakmica.\n");
-        return;
-    }
+	printf("----- Popis utakmica -----\n");
 
-    for (int i = 0; i < brojUtakmica; i++) {
-        printf("Utakmica %d:\n", i + 1);
-        printf("Protivnik: %s\n", utakmice[i].protivnik);
-        printf("Golovi nase ekipe: %d\n", utakmice[i].goloviNasaEkipa);
-        printf("Golovi protivnicke ekipe: %d\n", utakmice[i].goloviProtivnik);
-        printf("-------------------------\n");
-    }
+	for (int i = 0; i < brojUtakmica; i++) {
+		printf("Utakmica %d:\n", i + 1);
+		printf("Protivnik: %s\n", utakmice[i].protivnik);
+		/*printf("Broj golova naseg kluba: %d\n", utakmice[i].goloviNasaEkipa);
+		printf("Broj golova protivnicke ekipe: %d\n", utakmice[i].goloviProtivnik);*/
+
+		printf("NasKlub  %d - %d  %s\n", utakmice[i].goloviNasaEkipa, utakmice[i].goloviProtivnik, utakmice[i].protivnik);
+		printf("-------------------------\n");
+	}
 }
 
-// Funkcija za spremanje igraca u datoteku "igraci.txt"
-void spremanjeIgracaUDatoteku(Igrac klub[], int brojIgraca) {
-    FILE* datoteka = fopen("igraci.txt", "a");
+void spremanjeIgracaUDatoteku(Igrac* klub, int brojIgraca) {
+	FILE* datoteka = fopen("igraci.txt", "w");
 
-    if (datoteka == NULL) {
-        printf("Nemoguce otvoriti datoteku za pisanje.\n");
-        return;
-    }
+	if (datoteka == NULL) {
+		printf("Greska pri otvaranju datoteke.\n");
+		return;
+	}
 
-    fprintf(datoteka, "----- Popis igraca -----\n");
+	for (int i = 0; i < brojIgraca; i++) {
+		fprintf(datoteka, "%s %d\n", klub[i].ime, klub[i].brojGolova);
+	}
 
-    for (int i = 0; i < brojIgraca; i++) {
-        fprintf(datoteka, "Igrac %d:\n", i + 1);
-        fprintf(datoteka, "Ime: %s\n", klub[i].ime);
-        fprintf(datoteka, "Prezime: %s\n", klub[i].prezime);
-        fprintf(datoteka, "Broj golova: %d\n", klub[i].brojGolova);
-        fprintf(datoteka, "-----------------------\n");
-    }
+	fclose(datoteka);
 
-    fclose(datoteka);
-
-    printf("Podaci o igracima su uspjesno spremljeni u datoteku.\n");
+	printf("Podaci o igracima su spremljeni u datoteku.\n");
 }
 
-// Funkcija za spremanje rezultata utakmica u datoteku "rezultati.txt"
-void spremanjeUtakmicaUDatoteku(Utakmica utakmice[], int brojUtakmica) {
-    FILE* datoteka = fopen("rezultati.txt", "a");
+void spremanjeUtakmicaUDatoteku(Utakmica* utakmice, int brojUtakmica) {
+	FILE* datoteka = fopen("utakmice.txt", "w");
 
-    if (datoteka == NULL) {
-        printf("Nemoguce otvoriti datoteku za pisanje.\n");
-        return;
-    }
+	if (datoteka == NULL) {
+		printf("Greska pri otvaranju datoteke.\n");
+		return;
+	}
 
-    fprintf(datoteka, "----- Popis utakmica -----\n");
-    
-    
+	for (int i = 0; i < brojUtakmica; i++) {
+		fprintf(datoteka, "NasKlub  %d - %d  %s\n", utakmice[i].goloviNasaEkipa, utakmice[i].goloviProtivnik, utakmice[i].protivnik);
+	}
 
-    for (int i = 0; i < brojUtakmica; i++) {
-        fprintf(datoteka, "Utakmica %d:\n", i + 1);
-        fprintf(datoteka, "Protivnik: %s\n", utakmice[i].protivnik);
-        fprintf(datoteka, "NasKlub  %d - %d  %s\n", utakmice[i].goloviNasaEkipa, utakmice[i].goloviProtivnik, utakmice[i].protivnik);
-        fprintf(datoteka, "-------------------------\n");
-        
-        brojRezultata++;
-    }
-    
-    fclose(datoteka);
+	fclose(datoteka);
 
-    printf("Podaci o rezultatima utakmica su uspjesno spremljeni u datoteku.\n");
+	printf("Podaci o utakmicama su spremljeni u datoteku.\n");
 }
 
-    
-void pretraziRezultate(Utakmica utakmice[],int brojUtakmica){
-char protivnik[30];
-int pronaden=0;
- 
-    printf("Unesite ime protivnika za pretrazivanje: ");
-    scanf("%s",protivnik);
-    printf("\n Rezultat za protivnika %s:\n",protivnik);
-    for(int i=0;i<brojUtakmica;i++){
-    if(utakmice[i].protivnik==protivnik){
-       printf("Utakmica %d:\n", i + 1);
-        printf("Protivnik: %s\n", utakmice[i].protivnik);
-        printf("Golovi nase ekipe: %d\n", utakmice[i].goloviNasaEkipa);
-        printf("Golovi protivnicke ekipe: %d\n", utakmice[i].goloviProtivnik);
-        printf("-------------------------\n");
-        pronaden=1;
-    }
-    }
-if(!pronaden){
-printf("Nema rezultata za protivnika: %s.\n",protivnik);
-}
+void pretraziRezultate(Utakmica* utakmice, int brojUtakmica) {
+	char protivnik[30];
+	printf("Unesite ime protivnika: ");
+	scanf("%s", protivnik);
+
+	int pronaden = 0;
+
+	for (int i = 0; i < brojUtakmica; i++) {
+		if (utakmice[i].protivnik==protivnik) {
+			printf("Utakmica %d:\n", i + 1);
+			printf("Protivnik: %s\n", utakmice[i].protivnik);
+			/*printf("Broj golova naseg kluba: %d\n", utakmice[i].goloviNasaEkipa);
+			printf("Broj golova protivnicke ekipe: %d\n", utakmice[i].goloviProtivnik);*/
+			printf("NasKlub  %d - %d  %s\n", utakmice[i].goloviNasaEkipa, utakmice[i].goloviProtivnik, utakmice[i].protivnik);
+			printf("-------------------------\n");
+
+			pronaden = 1;
+		}
+	}
+
+	if (!pronaden) {
+		printf("Nema rezultata za trazenog protivnika.\n");
+	}
 }
 
