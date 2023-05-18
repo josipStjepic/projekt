@@ -122,4 +122,3 @@ void pretraziRezultate(Utakmica* utakmice, int brojUtakmica) {
 		printf("Nema rezultata za trazenog protivnika.\n");
 	}
 }
-
