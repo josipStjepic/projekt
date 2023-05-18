@@ -7,7 +7,7 @@
 // Funkcija za unos novog igraca
 void unosIgraca(Igrac klub[], int* brojIgraca) {
     if (*brojIgraca >= MAX_IGRACA) {
-        printf("Klub je veæ popunjen!\n");
+        printf("Klub je veÃ¦ popunjen!\n");
         return;
     }
 
@@ -143,5 +143,26 @@ void spremanjeUtakmicaUDatoteku(Utakmica utakmice[], int brojUtakmica) {
     printf("Podaci o rezultatima utakmica su uspjesno spremljeni u datoteku.\n");
 }
 
-
+    
+void pretraziRezultate(Utakmica utakmice[],int brojUtakmica){
+char protivnik[30];
+int pronaden=0;
+ 
+    printf("Unesite ime protivnika za pretrazivanje: ");
+    scanf("%s",protivnik);
+    printf("\n Rezultat za protivnika %s:\n",protivnik);
+    for(int i=0;i<brojUtakmica;i++){
+    if(utakmice[i].protivnik==protivnik){
+       printf("Utakmica %d:\n", i + 1);
+        printf("Protivnik: %s\n", utakmice[i].protivnik);
+        printf("Golovi nase ekipe: %d\n", utakmice[i].goloviNasaEkipa);
+        printf("Golovi protivnicke ekipe: %d\n", utakmice[i].goloviProtivnik);
+        printf("-------------------------\n");
+        pronaden=1;
+    }
+    }
+if(!pronaden){
+printf("Nema rezultata za protivnika: %s.\n",protivnik);
+}
+}
 
