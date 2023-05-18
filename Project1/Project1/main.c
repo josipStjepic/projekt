@@ -16,6 +16,7 @@ int main() {
         printf("2. Unos rezultata utakmice\n");
         printf("3. Ispis igraca\n");
         printf("4. Ispis utakmica\n");
+        printf("5. Pretrazi rezultat\n");
         printf("0. Izlaz iz programa\n");
         printf("-------------------------\n");
         printf("Unesite svoj izbor: ");
@@ -33,6 +34,9 @@ int main() {
             break;
         case 4:
             ispisUtakmica(utakmice, brojUtakmica);
+             break;  
+         case 5:
+            pretraziRezultate(utakmice, brojUtakmica);
             break;
        
            
