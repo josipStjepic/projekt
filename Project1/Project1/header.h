@@ -21,4 +21,4 @@ void spremanjeIgracaUDatoteku(Igrac* klub, int brojIgraca);
 void spremanjeUtakmicaUDatoteku(Utakmica* utakmice, int brojUtakmica);
 void pretraziRezultate(Utakmica* utakmice, int brojUtakmica);
 
-#endif  // HEADER_H
+#endif  // HEADER_H 
