@@ -1,0 +1,6 @@
+Ovaj program omogucuje upravljanje informacijama o nogometnom klubu. Program koristi strukutre za pohranu podataka o igracima i rezultatima utakmica. Opica u izborniku Unos igraca omogucuje korisniku
+unos informacija o igracima(ime, prezime ,broj golova). Opcija Unos rezultata utakmice omogucuje korisniku unos informacija o rezultatima odigranih utakmica.Unose se podatci o imenu protivnika i rezultatu.
+Opcija ispis utakmica prikazuje popis svih odigranih utakmica ,zajedno s imenom protivnika i rezultatom. Opcija ispis igraca prikazuje popis svih igraca kluba ,zajedno s podatcima koji su gore navedeni.
+Opcija pretrazivanje rezultata omogucuje korisniku pretrazivanje rezultata utakmica po imenu protivnika a program ispisuje rezultat utakmice. Program se izvrsava u petlji sve dok se ne odabere opcija za izlaz 
+iz programa. Ovaj program omoguvuje korisniku unos ,pregledavanje i pretragu podataka o igracima i utakmicama nogometnog kluba, te njihovo spremanje u txt datoteke radi kasnijeg koristenja. Kada se u u izborniku
+odaberemo upis igraca ili utakmica sa upisom u polje, podatci se takoder spremaju u txt datoteku jer se funkcije za pohranu pozivaju u funkciji za upis igraca.
