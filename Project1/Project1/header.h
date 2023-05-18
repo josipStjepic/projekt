@@ -23,6 +23,6 @@ void ispisIgraca(Igrac klub[], int brojIgraca);
 void ispisUtakmica(Utakmica utakmice[], int brojUtakmica);
 void spremanjeIgracaUDatoteku(Igrac klub[], int brojIgraca);
 void spremanjeUtakmicaUDatoteku(Utakmica utakmice[], int brojUtakmica);
-
+void pretratiRezultate(Utakmica utakmice[],int brojUtakmica);
 #endif
 
