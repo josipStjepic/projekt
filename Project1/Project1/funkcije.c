@@ -9,7 +9,7 @@ void unosIgraca(Igrac** klub, int* brojIgraca) {
 	*klub = realloc(*klub, (*brojIgraca) * sizeof(Igrac));
 
 	printf("Unesite ime igraca: ");
-	scanf("%s", (*klub)[*brojIgraca - 1].ime);
+	scanf("%s", (*klub)[*brojIgraca - 1].ime); // 2.
 
 	printf("Unesite broj golova igraca: ");
 	scanf("%d", &(*klub)[*brojIgraca - 1].brojGolova);
@@ -33,7 +33,8 @@ void ispisIgraca(Igrac* klub, int brojIgraca) {
 
 void unosUtakmice(Utakmica** utakmice, int* brojUtakmica) {
 	(*brojUtakmica)++;
-	*utakmice = realloc(*utakmice, (*brojUtakmica) * sizeof(Utakmica));
+	*utakmice = realloc(*utakmice, (*brojUtakmica) * sizeof(Utakmica)); //13. 14.
+
 
 	printf("Unesite ime protivnika: ");
 	scanf("%s", (*utakmice)[*brojUtakmica - 1].protivnik);
@@ -50,6 +51,7 @@ void ispisUtakmica(Utakmica* utakmice, int brojUtakmica) {
 		printf("Nema upisanih utakmica.\n");
 		return;
 	}
+	qsort(utakmice, brojUtakmica, sizeof(Utakmica), usporediUtakmice); //20. 7.
 
 	printf("----- Popis utakmica -----\n");
 
@@ -68,7 +70,7 @@ void spremanjeIgracaUDatoteku(Igrac* klub, int brojIgraca) {
 	FILE* datoteka = fopen("igraci.txt", "w");
 
 	if (datoteka == NULL) {
-		printf("Greska pri otvaranju datoteke.\n");
+		perror("Greska pri otvaranju datoteke.\n"); // 19.
 		return;
 	}
 
@@ -82,7 +84,7 @@ void spremanjeIgracaUDatoteku(Igrac* klub, int brojIgraca) {
 }
 
 void spremanjeUtakmicaUDatoteku(Utakmica* utakmice, int brojUtakmica) {
-	FILE* datoteka = fopen("utakmice.txt", "w");
+	FILE* datoteka = fopen("utakmice.txt", "w"); // 16. 17. 
 
 	if (datoteka == NULL) {
 		printf("Greska pri otvaranju datoteke.\n");
@@ -122,3 +124,23 @@ void pretraziRezultate(Utakmica* utakmice, int brojUtakmica) {
 		printf("Nema rezultata za trazenog protivnika.\n");
 	}
 }
+
+int usporediUtakmice(const void* a, const void* b) {
+	Utakmica* utakmicaA = (Utakmica*)a;
+	Utakmica* utakmicaB = (Utakmica*)b;
+
+	// Usporedba prema broju golova naše ekipe
+
+	if (utakmicaA->goloviNasaEkipa < utakmicaB->goloviNasaEkipa) {
+		return -1;
+	}
+	else if (utakmicaA->goloviNasaEkipa > utakmicaB->goloviNasaEkipa) {
+		return 1;
+	}
+	else {
+		return 0;
+	}
+}
+
+
+//6.
