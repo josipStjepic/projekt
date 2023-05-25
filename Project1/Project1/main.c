@@ -4,11 +4,11 @@
 #include "header.h"
 
 int main() {
-	Igrac* klub = NULL;
+	Igrac* klub = NULL; 
 	int brojIgraca = 0;
 
 	Utakmica* utakmice = NULL;
-	int brojUtakmica = 0;
+	 static int brojUtakmica = 0;
 
 	int izbor;
 	do {
@@ -21,7 +21,7 @@ int main() {
 		printf("6. Izlaz\n");
 		printf("Odabir: ");
 		scanf("%d", &izbor);
-
+		//8.
 		switch (izbor) {
 		case 1:
 			unosIgraca(&klub, &brojIgraca);
@@ -43,7 +43,7 @@ int main() {
 		case 6:
 			printf("Izlazi iz programa.\n");
 			break;
-		
+
 		default:
 			printf("Krivi odabir. Molim pokusajte ponovno.\n");
 		}
@@ -52,10 +52,8 @@ int main() {
 	} while (izbor != 8);
 
 	free(klub);
-	free(utakmice);
+	free(utakmice); // 15.  
 
 	return 0;
 }
-
-
-
+//6.
