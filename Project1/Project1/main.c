@@ -56,19 +56,6 @@ int main() {
 
 	return 0;
 }
-//
-int usporediUtakmice(const void *a, const void *b) {
-    Utakmica *utakmicaA = (Utakmica *)a;
-    Utakmica *utakmicaB = (Utakmica *)b;
 
-    // Usporedba prema broju golova naše ekipe
-    if (utakmicaA->goloviNasaEkipa < utakmicaB->goloviNasaEkipa) {
-        return -1;
-    } else if (utakmicaA->goloviNasaEkipa > utakmicaB->goloviNasaEkipa) {
-        return 1;
-    } else {
-        return 0;
-    }
-}
 
 
