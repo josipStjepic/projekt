@@ -4,11 +4,11 @@
 #include "header.h"
 
 int main() {
-	Igrac* klub = NULL; 
+	Igrac* klub = NULL;
 	int brojIgraca = 0;
 
 	Utakmica* utakmice = NULL;
-	 static int brojUtakmica = 0;
+	static int brojUtakmica = 0;
 
 	int izbor;
 	do {
@@ -38,10 +38,14 @@ int main() {
 			ispisUtakmica(utakmice, brojUtakmica);
 			break;
 		case 5:
+			sortirajUtakmice(utakmice, brojUtakmica);
 			pretraziRezultate(utakmice, brojUtakmica);
 			break;
 		case 6:
 			printf("Izlazi iz programa.\n");
+			obrisiPodatke("rezultati.txt");
+			obrisiPodatke("igraci.txt");
+			exit(0);
 			break;
 
 		default:
