@@ -71,7 +71,8 @@ void spremanjeIgracaUDatoteku(Igrac* klub, int brojIgraca) {
 
 	if (datoteka == NULL) {
 		perror("Greska pri otvaranju datoteke.\n"); // 19.
-		return;
+		printf("Errno: %d\n", errno);
+		return 1;
 	}
 
 	for (int i = 0; i < brojIgraca; i++) {
@@ -84,11 +85,12 @@ void spremanjeIgracaUDatoteku(Igrac* klub, int brojIgraca) {
 }
 
 void spremanjeUtakmicaUDatoteku(Utakmica* utakmice, int brojUtakmica) {
-	FILE* datoteka = fopen("utakmice.txt", "w"); // 16. 17. 
+	FILE* datoteka = fopen("rezultati.txt", "w"); // 16. 17. 
 
 	if (datoteka == NULL) {
-		printf("Greska pri otvaranju datoteke.\n");
-		return;
+		perror("Greska pri otvaranju datoteke.\n"); // 19.
+		printf("Errno: %d\n", errno);
+		return 1;
 	}
 
 	for (int i = 0; i < brojUtakmica; i++) {
@@ -100,6 +102,37 @@ void spremanjeUtakmicaUDatoteku(Utakmica* utakmice, int brojUtakmica) {
 	printf("Podaci o utakmicama su spremljeni u datoteku.\n");
 }
 
+
+
+
+
+int usporediUtakmice(const void* a, const void* b) {
+	const Utakmica* utakmica1 = (const Utakmica*)a;
+	const Utakmica* utakmica2 = (const Utakmica*)b;
+
+	// Sortiraj utakmice prema broju golova naše ekipe (silazno)
+	if (utakmica1->goloviNasaEkipa > utakmica2->goloviNasaEkipa) {
+		return -1;
+	}
+	else if (utakmica1->goloviNasaEkipa < utakmica2->goloviNasaEkipa) {
+		return 1;
+	}
+
+	// Ako je broj golova naše ekipe jednak, sortiraj prema broju golova protivničke ekipe (silazno)
+	if (utakmica1->goloviProtivnik > utakmica2->goloviProtivnik) {
+		return -1;
+	}
+	else if (utakmica1->goloviProtivnik < utakmica2->goloviProtivnik) {
+		return 1;
+	}
+
+	return 0;  // Utakmice su jednake
+}
+
+void sortirajUtakmice(Utakmica* utakmice, int brojUtakmica) {
+	qsort(utakmice, brojUtakmica, sizeof(Utakmica), usporediUtakmice);
+}
+
 void pretraziRezultate(Utakmica* utakmice, int brojUtakmica) {
 	char protivnik[30];
 	printf("Unesite ime protivnika: ");
@@ -108,7 +141,7 @@ void pretraziRezultate(Utakmica* utakmice, int brojUtakmica) {
 	int pronaden = 0;
 
 	for (int i = 0; i < brojUtakmica; i++) {
-		if (utakmice[i].protivnik==protivnik) {
+		if (strcmp(utakmice[i].protivnik,protivnik)==0) {
 			printf("Utakmica %d:\n", i + 1);
 			printf("Protivnik: %s\n", utakmice[i].protivnik);
 			/*printf("Broj golova naseg kluba: %d\n", utakmice[i].goloviNasaEkipa);
@@ -125,22 +158,16 @@ void pretraziRezultate(Utakmica* utakmice, int brojUtakmica) {
 	}
 }
 
-int usporediUtakmice(const void* a, const void* b) {
-	Utakmica* utakmicaA = (Utakmica*)a;
-	Utakmica* utakmicaB = (Utakmica*)b;
+void obrisiPodatke(const char* nazivDatoteke) {
+	FILE* datoteka = fopen(nazivDatoteke, "w");
+	if (datoteka == NULL) {
+		printf("Greška pri otvaranju datoteke %s\n", nazivDatoteke);
+		return;
+	}
 
-	// Usporedba prema broju golova naše ekipe
-
-	if (utakmicaA->goloviNasaEkipa < utakmicaB->goloviNasaEkipa) {
-		return -1;
-	}
-	else if (utakmicaA->goloviNasaEkipa > utakmicaB->goloviNasaEkipa) {
-		return 1;
-	}
-	else {
-		return 0;
-	}
+	// Obriši sadržaj datoteke
+	fclose(datoteka);
+	printf("Podaci iz datoteke %s su obrisani.\n", nazivDatoteke);
 }
-
 
 //6.
