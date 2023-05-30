@@ -4,6 +4,7 @@
 
 typedef struct {
 	char ime[30];
+	char prezime[30];
 	int brojGolova;
 } Igrac; //3. 10.
 
