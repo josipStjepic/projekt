@@ -21,5 +21,7 @@ void spremanjeIgracaUDatoteku(Igrac* klub, int brojIgraca);
 void spremanjeUtakmicaUDatoteku(Utakmica* utakmice, int brojUtakmica);
 void pretraziRezultate(Utakmica* utakmice, int brojUtakmica);
 int usporediUtakmice(const void* a, const void* b);
+void sortirajUtakmice(Utakmica* utakmice, int brojUtakmica);
+void obrisiPodatke(const char* nazivDatoteke);
 #endif  // HEADER_H 
 //6.
