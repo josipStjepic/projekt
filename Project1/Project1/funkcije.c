@@ -11,6 +11,9 @@ void unosIgraca(Igrac** klub, int* brojIgraca) {
 	printf("Unesite ime igraca: ");
 	scanf("%s", (*klub)[*brojIgraca - 1].ime); // 2.
 
+	printf("Unesite prezime igraca: ");
+	scanf("%s", (*klub)[*brojIgraca - 1].prezime);
+	
 	printf("Unesite broj golova igraca: ");
 	scanf("%d", &(*klub)[*brojIgraca - 1].brojGolova);
 }
@@ -26,6 +29,7 @@ void ispisIgraca(Igrac* klub, int brojIgraca) {
 	for (int i = 0; i < brojIgraca; i++) {
 		printf("Igrac %d:\n", i + 1);
 		printf("Ime: %s\n", klub[i].ime);
+		printf("Ime: %s\n", klub[i].prezime);
 		printf("Broj golova: %d\n", klub[i].brojGolova);
 		printf("-----------------------\n");
 	}
@@ -76,7 +80,7 @@ void spremanjeIgracaUDatoteku(Igrac* klub, int brojIgraca) {
 	}
 
 	for (int i = 0; i < brojIgraca; i++) {
-		fprintf(datoteka, "%s %d\n", klub[i].ime, klub[i].brojGolova);
+		fprintf(datoteka, "%s %s %d\n", klub[i].ime, klub[i].prezime, klub[i].brojGolova);
 	}
 
 	fclose(datoteka);
