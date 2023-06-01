@@ -1,10 +1,11 @@
 #pragma once
 #ifndef HEADER_H
 #define HEADER_H
-
+#define MAX_IME 50
+#define MAX_PREZIME 50
 typedef struct {
-	char ime[30];
-	char prezime[30];
+	char ime[MAX_IME];
+	char prezime[MAX_PREZIME];
 	int brojGolova;
 } Igrac; //3. 10.
 
@@ -25,4 +26,4 @@ int usporediUtakmice(const void* a, const void* b);
 void sortirajUtakmice(Utakmica* utakmice, int brojUtakmica);
 void obrisiPodatke(const char* nazivDatoteke);
 #endif  // HEADER_H 
-//6.
+//6.#pragma once
