@@ -13,7 +13,7 @@ void unosIgraca(Igrac** klub, int* brojIgraca) {
 
 	printf("Unesite prezime igraca: ");
 	scanf("%s", (*klub)[*brojIgraca - 1].prezime);
-	
+
 	printf("Unesite broj golova igraca: ");
 	scanf("%d", &(*klub)[*brojIgraca - 1].brojGolova);
 }
@@ -24,14 +24,14 @@ void ispisIgraca(Igrac* klub, int brojIgraca) {
 		return;
 	}
 
-	printf("----- Popis igraca -----\n");
+	printf("Popis igraca:\n");
 
 	for (int i = 0; i < brojIgraca; i++) {
 		printf("Igrac %d:\n", i + 1);
 		printf("Ime: %s\n", klub[i].ime);
 		printf("Ime: %s\n", klub[i].prezime);
 		printf("Broj golova: %d\n", klub[i].brojGolova);
-		printf("-----------------------\n");
+		printf("\n");
 	}
 }
 
@@ -57,7 +57,7 @@ void ispisUtakmica(Utakmica* utakmice, int brojUtakmica) {
 	}
 	qsort(utakmice, brojUtakmica, sizeof(Utakmica), usporediUtakmice); //20. 7.
 
-	printf("----- Popis utakmica -----\n");
+	printf("Popis utakmica:\n");
 
 	for (int i = 0; i < brojUtakmica; i++) {
 		printf("Utakmica %d:\n", i + 1);
@@ -66,7 +66,7 @@ void ispisUtakmica(Utakmica* utakmice, int brojUtakmica) {
 		printf("Broj golova protivnicke ekipe: %d\n", utakmice[i].goloviProtivnik);*/
 
 		printf("NasKlub  %d - %d  %s\n", utakmice[i].goloviNasaEkipa, utakmice[i].goloviProtivnik, utakmice[i].protivnik);
-		printf("-------------------------\n");
+		printf("\n");
 	}
 }
 
@@ -78,7 +78,7 @@ void spremanjeIgracaUDatoteku(Igrac* klub, int brojIgraca) {
 		printf("Errno: %d\n", errno);
 		return 1;
 	}
-
+	rewind(datoteka);
 	for (int i = 0; i < brojIgraca; i++) {
 		fprintf(datoteka, "%s %s %d\n", klub[i].ime, klub[i].prezime, klub[i].brojGolova);
 	}
@@ -89,14 +89,14 @@ void spremanjeIgracaUDatoteku(Igrac* klub, int brojIgraca) {
 }
 
 void spremanjeUtakmicaUDatoteku(Utakmica* utakmice, int brojUtakmica) {
-	FILE* datoteka = fopen("rezultati.txt", "w"); // 16. 17. 
+	FILE* datoteka = fopen("rezultati.txt", "w"); // 16. 
 
 	if (datoteka == NULL) {
-		perror("Greska pri otvaranju datoteke.\n"); // 19.
+		perror("Greska pri otvaranju datoteke.\n"); // 11. 19.
 		printf("Errno: %d\n", errno);
 		return 1;
 	}
-
+	rewind(datoteka);//17.
 	for (int i = 0; i < brojUtakmica; i++) {
 		fprintf(datoteka, "NasKlub  %d - %d  %s\n", utakmice[i].goloviNasaEkipa, utakmice[i].goloviProtivnik, utakmice[i].protivnik);
 	}
@@ -111,7 +111,7 @@ void spremanjeUtakmicaUDatoteku(Utakmica* utakmice, int brojUtakmica) {
 
 
 int usporediUtakmice(const void* a, const void* b) {
-	const Utakmica* utakmica1 = (const Utakmica*)a;
+	const Utakmica* utakmica1 = (const Utakmica*)a; // 11. 
 	const Utakmica* utakmica2 = (const Utakmica*)b;
 
 	// Sortiraj utakmice prema broju golova naše ekipe (silazno)
@@ -134,7 +134,7 @@ int usporediUtakmice(const void* a, const void* b) {
 }
 
 void sortirajUtakmice(Utakmica* utakmice, int brojUtakmica) {
-	qsort(utakmice, brojUtakmica, sizeof(Utakmica), usporediUtakmice);
+	qsort(utakmice, brojUtakmica, sizeof(Utakmica), usporediUtakmice);// 20.
 }
 
 void pretraziRezultate(Utakmica* utakmice, int brojUtakmica) {
@@ -145,13 +145,13 @@ void pretraziRezultate(Utakmica* utakmice, int brojUtakmica) {
 	int pronaden = 0;
 
 	for (int i = 0; i < brojUtakmica; i++) {
-		if (strcmp(utakmice[i].protivnik,protivnik)==0) {
+		if (strcmp(utakmice[i].protivnik, protivnik) == 0) {
 			printf("Utakmica %d:\n", i + 1);
 			printf("Protivnik: %s\n", utakmice[i].protivnik);
 			/*printf("Broj golova naseg kluba: %d\n", utakmice[i].goloviNasaEkipa);
 			printf("Broj golova protivnicke ekipe: %d\n", utakmice[i].goloviProtivnik);*/
 			printf("NasKlub  %d - %d  %s\n", utakmice[i].goloviNasaEkipa, utakmice[i].goloviProtivnik, utakmice[i].protivnik);
-			printf("-------------------------\n");
+			printf("\n");
 
 			pronaden = 1;
 		}
@@ -165,7 +165,8 @@ void pretraziRezultate(Utakmica* utakmice, int brojUtakmica) {
 void obrisiPodatke(const char* nazivDatoteke) {
 	FILE* datoteka = fopen(nazivDatoteke, "w");
 	if (datoteka == NULL) {
-		printf("Greška pri otvaranju datoteke %s\n", nazivDatoteke);
+		printf("Greska pri otvaranju datoteke %s\n", nazivDatoteke);
+		printf("Errno: %d\n", errno);
 		return;
 	}
 
