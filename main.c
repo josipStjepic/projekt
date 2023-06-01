@@ -5,14 +5,14 @@
 
 int main() {
 	Igrac* klub = NULL;
-	int brojIgraca = 0;
+	int brojIgraca = 0; // 1. 
 
 	Utakmica* utakmice = NULL;
-	static int brojUtakmica = 0;
+	static int brojUtakmica = 0; // 5.
 
 	int izbor;
 	do {
-		printf("----- Izbornik -----\n");
+		printf("Izbornik:\n");
 		printf("1. Unos igraca\n");
 		printf("2. Ispis igraca\n");
 		printf("3. Unos utakmice\n");
