@@ -2,11 +2,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 #include "header.h"
+#define MAX_BROJEVA 100000
+
+
+void randomBroj(int* serijskiBroj) {
+	static int zauzetiBrojevi[100000] = { 0 };
+	int broj, generiran = 0;
+
+	while (!generiran) {
+		broj = rand() % 100000 + 1;
+
+		if (!zauzetiBrojevi[broj - 1]) {
+			zauzetiBrojevi[broj - 1] = 1;
+			*serijskiBroj = broj;
+			generiran++;
+		}
+	}
+	for (int i = 0; i < generiran; i++) {
+		if (zauzetiBrojevi[i] == serijskiBroj) { // 11. 12.
+			return 0;  // Broj nije jedinstven
+		}
+	}
+	return 1;  // Broj je jedinstven
+}
+
+
+
 
 void unosIgraca(Igrac** klub, int* brojIgraca) {
 	(*brojIgraca)++;
 	*klub = realloc(*klub, (*brojIgraca) * sizeof(Igrac));
+
+	
+
 
 	printf("Unesite ime igraca: ");
 	scanf("%s", (*klub)[*brojIgraca - 1].ime); // 2.
@@ -16,6 +46,9 @@ void unosIgraca(Igrac** klub, int* brojIgraca) {
 
 	printf("Unesite broj golova igraca: ");
 	scanf("%d", &(*klub)[*brojIgraca - 1].brojGolova);
+
+	randomBroj(&(*klub)[*brojIgraca - 1].serijskiBroj);
+	
 }
 
 void ispisIgraca(Igrac* klub, int brojIgraca) {
@@ -31,6 +64,7 @@ void ispisIgraca(Igrac* klub, int brojIgraca) {
 		printf("Ime: %s\n", klub[i].ime);
 		printf("Ime: %s\n", klub[i].prezime);
 		printf("Broj golova: %d\n", klub[i].brojGolova);
+		printf("Serijski broj: %d\n", klub[i].serijskiBroj);
 		printf("\n");
 	}
 }
@@ -80,7 +114,7 @@ void spremanjeIgracaUDatoteku(Igrac* klub, int brojIgraca) {
 	}
 	rewind(datoteka);
 	for (int i = 0; i < brojIgraca; i++) {
-		fprintf(datoteka, "%s %s %d\n", klub[i].ime, klub[i].prezime, klub[i].brojGolova);
+		fprintf(datoteka, "%s %s %d %d\n", klub[i].ime, klub[i].prezime, klub[i].brojGolova, klub[i].serijskiBroj);
 	}
 
 	fclose(datoteka);
@@ -145,7 +179,7 @@ void pretraziRezultate(Utakmica* utakmice, int brojUtakmica) {
 	int pronaden = 0;
 
 	for (int i = 0; i < brojUtakmica; i++) {
-		if (strcmp(utakmice[i].protivnik, protivnik) == 0) {
+		if (strcmp(utakmice[i].protivnik, protivnik) == 0) { // 21.
 			printf("Utakmica %d:\n", i + 1);
 			printf("Protivnik: %s\n", utakmice[i].protivnik);
 			/*printf("Broj golova naseg kluba: %d\n", utakmice[i].goloviNasaEkipa);
@@ -172,7 +206,25 @@ void obrisiPodatke(const char* nazivDatoteke) {
 
 	// Obriši sadržaj datoteke
 	fclose(datoteka);
-	printf("Podaci iz datoteke %s su obrisani.\n", nazivDatoteke);
+	//printf("Podaci iz datoteke %s su obrisani.\n", nazivDatoteke);
 }
 
+void obrisiDatoteke() {
+	char rezultatiDatoteka[] = "rezultati.txt";
+	char igraciDatoteka[] = "igraci.txt";
+
+	if (remove(rezultatiDatoteka) == 0) {
+		printf("Datoteka %s uspješno izbrisana.\n", rezultatiDatoteka);
+	}
+	else {
+		printf("Greška prilikom brisanja datoteke %s. Greska: %s\n", rezultatiDatoteka, strerror(errno));
+	}
+
+	if (remove(igraciDatoteka) == 0) { //18.
+		printf("Datoteka %s uspješno izbrisana.\n", igraciDatoteka);
+	}
+	else {
+		printf("Greška prilikom brisanja datoteke %s. Greska: %s\n", igraciDatoteka, strerror(errno));
+	}
+}
 //6.
