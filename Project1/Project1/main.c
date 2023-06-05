@@ -10,6 +10,12 @@ int main() {
 	Utakmica* utakmice = NULL;
 	static int brojUtakmica = 0; // 5.
 
+	obrisiPodatke("rezultati.txt");
+	obrisiPodatke("igraci.txt");
+	free(klub);
+	free(utakmice); // 15. 
+
+
 	int izbor;
 	do {
 		printf("Izbornik:\n");
@@ -18,7 +24,8 @@ int main() {
 		printf("3. Unos utakmice\n");
 		printf("4. Ispis utakmica\n");
 		printf("5. Pretrazi rezultate utakmica\n");
-		printf("6. Izlaz\n");
+		printf("6. Izbrisi datoteke\n");
+		printf("7. Izlaz\n");
 		printf("Odabir: ");
 		scanf("%d", &izbor);
 		//8.
@@ -41,7 +48,11 @@ int main() {
 			sortirajUtakmice(utakmice, brojUtakmica);
 			pretraziRezultate(utakmice, brojUtakmica);
 			break;
+
 		case 6:
+			obrisiDatoteke();
+			break;
+		case 7:
 			printf("Izlazi iz programa.\n");
 			obrisiPodatke("rezultati.txt");
 			obrisiPodatke("igraci.txt");
@@ -54,10 +65,7 @@ int main() {
 
 		printf("\n");
 	} while (izbor != 8);
-	obrisiPodatke("rezultati.txt");
-	obrisiPodatke("igraci.txt");
-	free(klub);
-	free(utakmice); // 15.  
+
 
 	return 0;
 }
