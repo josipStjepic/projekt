@@ -4,6 +4,7 @@
 #define MAX_IME 50
 #define MAX_PREZIME 50
 typedef struct {
+	int serijskiBroj;
 	char ime[MAX_IME];
 	char prezime[MAX_PREZIME];
 	int brojGolova;
@@ -25,5 +26,7 @@ void pretraziRezultate(Utakmica* utakmice, int brojUtakmica);
 int usporediUtakmice(const void* a, const void* b);
 void sortirajUtakmice(Utakmica* utakmice, int brojUtakmica);
 void obrisiPodatke(const char* nazivDatoteke);
+void randomBroj(int* serijskiBroj);
+void obrisiDatoteke();
 #endif  // HEADER_H 
 //6.#pragma once
